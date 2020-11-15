@@ -1,0 +1,24 @@
+---
+title: "FÅ igen"
+output: html_notebook
+---
+
+Indlæs datasæt og sårn
+```{r}
+data.PV <- read.csv("VagalToneInInflammat-PatientVisitations_DATA_2020-R.csv")
+```
+
+# Få styr på visits
+Man kan enten bruge stringr (tidyverse) eller Base R
+
+
+```{r}
+# Base R using gsub
+data.PV$redcap_event_name <- gsub("_arm_1", "", data.PV$redcap_event_name)
+data.PV$redcap_event_name <- gsub("visit_", "", data.PV$redcap_event_name)
+```
+
+```{r}
+data.PV[ ,c() ]
+```
+

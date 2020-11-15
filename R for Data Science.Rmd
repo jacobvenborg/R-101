@@ -3,6 +3,63 @@ title: "R for Data Science"
 output: html_notebook
 ---
 
+Vi skal lige have pakkerne i orden til brug. Primært tidyverse. Måske markdown. 
+
+```{r include=FALSE}
+pakker <- c("tidyverse", "rmarkdown")
+lapply(pakker, require, character.only = TRUE)
+
+```
+
+```{r}
+ggplot(data = <DATA>) +
+  <GEOM_FUNCTION>(mapping = aes(<MAPPINGS>))
+```
+
+
+# A Graphing Template Excercises
+
+1. Run ggplot(data = mpg). What do you see?
+
+```{r}
+ggplot(data = mpg)
+```
+Vi ser ikke det store! :)
+
+2. How many rows are in mtcars? How many columns?
+
+```{r}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = mtcars))
+```
+
+
+3. What does the drv variable describe? Read the help for ?mpg to find out.
+
+4. Make a scatterplot of hwy versus cyl.
+
+```{r}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = cyl, y = hwy))
+```
+
+
+5. What happens if you make a scatterplot of class versus drv? Why is the plot not useful?
+
+```{r}
+ggplot2
+```
+
+
+2
+
+3
+
+4
+
+5
+
+
 Hvorfor viser den mon ikke nedenstående kode?
 
 ```{r}

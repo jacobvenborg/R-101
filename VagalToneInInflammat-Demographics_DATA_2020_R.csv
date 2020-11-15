@@ -1,0 +1,15 @@
+subject_id,redcap_event_name,redcap_repeat_instrument,redcap_repeat_instance,gender,dob,age,height_cm,weight_kg,bmi,rheumatism_date,nsaid_currently,ethnicitiy,ethnicity_other,smoking_status,smoking_amount,smoking_years,pack_years,caffeine_usage,caffeine_daily
+3,enrollment_arm_1,,,1,1947-05-23,72,160,59,23,2015,0,1,,1,,,,4,4
+4,enrollment_arm_1,,,1,1953-05-03,66,174,74,24,2019,1,1,,1,,,,4,"3 cups daily"
+5,enrollment_arm_1,,,1,1949-06-29,69,156,71,29,2019,1,1,,1,,,,4,"6-8 koppper"
+6,enrollment_arm_1,,,2,1930-09-11,88,175,74,24,2016,0,1,,2,3,25,3.75,4,"5 kopper kaffe"
+7,enrollment_arm_1,,,1,1952-07-16,67,167,73.5,26,2019,1,1,,2,10,25,12.5,4,"4 cups"
+8,enrollment_arm_1,,,1,1958-12-05,60,178,78,25,2019,1,1,,2,8,10,4,4,"4 krus"
+9,enrollment_arm_1,,,1,1944-06-24,75,166,56,20,2019,1,1,,1,,,,4,"6 kopper"
+10,enrollment_arm_1,,,1,1964-04-08,55,170,60,21,2019,0,1,,4,20,36,36,4,"6 kopper"
+12,enrollment_arm_1,,,1,1968-01-26,51,168,65,23,2017,0,1,,1,,,,4,"2-3 cups"
+13,enrollment_arm_1,,,1,1952-03-29,67,168,76,27,2019,0,1,,1,,,,4,"4 cups"
+15,enrollment_arm_1,,,1,1958-03-19,61,168,88,31,2019,0,1,,2,20,25,25,4,"4-5 cuos"
+16,enrollment_arm_1,,,1,1945-05-04,74,175,99,32,2019,0,1,,1,,,,4,"1 kop dagligt om morgenen"
+17,enrollment_arm_1,,,1,1966-03-12,53,174,85,28,2020,1,1,,2,11,20,11,4,"3 krus"
+20,enrollment_arm_1,,,1,1954-02-18,65,166,65,24,2020,0,1,,1,,,,4,"4 cups"
