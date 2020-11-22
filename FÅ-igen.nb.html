@@ -1799,15 +1799,28 @@ summary {
 <!-- rnb-text-begin -->
 <p>Indlæs datasæt og sårn</p>
 <!-- rnb-text-end -->
+<!-- rnb-text-begin -->
+<div id="få-styr-på-visits-variabel-redcap_event_name" class="section level1">
+<h1>Få styr på visits (variabel = redcap_event_name)</h1>
+<p>Først og fremmest ser vi, at redcap navngiver tingene på redcaps måde. Det er jo sikkert fint nok, men det kan vi ikke bruge til det store her i R. Vi skal remodellere lidt.</p>
+<p>Vi forsøger først at fjerne Man kan enten bruge stringr (tidyverse) eller Base R</p>
+<p>Her omdøber vi selve celler med indhold, såkaldte string-værdier. Der kan ikke laves statistik på strenge. Vi omdøber dem derfor for til sidst at lave dem til en anden type værdi (factor)</p>
+</div>
+<div id="omdøb-variable-redcap_event_name---visit" class="section level1">
+<h1>Omdøb variable (redcap_event_name -&gt; visit)</h1>
+<!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGF0YS5QViA8LSByZWFkLmNzdihcIlZhZ2FsVG9uZUluSW5mbGFtbWF0LVBhdGllbnRWaXNpdGF0aW9uc19EQVRBXzIwMjAtUi5jc3ZcIilcbmBgYCJ9 -->
-<pre class="r"><code>data.PV &lt;- read.csv(&quot;VagalToneInInflammat-PatientVisitations_DATA_2020-R.csv&quot;)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBCYXNlIFJcbm5hbWVzKGRhdGEuUFYpW25hbWVzKGRhdGEuUFYpPT1cInJlZGNhcF9ldmVudF9uYW1lXCJdIDwtIFwidmlzaXQxXCJcbiMgVGlkeXZlcnNlLCBkcGx5clxuZGF0YS5QViA8LSBkYXRhLlBWICU+JSByZW5hbWUodmlzaXQgPSByZWRjYXBfZXZlbnRfbmFtZSlcbmBgYCJ9 -->
+<pre class="r"><code># Base R
+names(data.PV)[names(data.PV)==&quot;redcap_event_name&quot;] &lt;- &quot;visit1&quot;
+# Tidyverse, dplyr
+data.PV &lt;- data.PV %&gt;% rename(visit = redcap_event_name)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<div id="få-styr-på-visits" class="section level1">
-<h1>Få styr på visits</h1>
-<p>Man kan enten bruge stringr (tidyverse) eller Base R</p>
+</div>
+<div id="fiks-celleværdier-som-strenge.-søg-og-erstat" class="section level1">
+<h1>Fiks celleværdier som strenge. Søg og erstat</h1>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBCYXNlIFIgdXNpbmcgZ3N1YlxuZGF0YS5QViRyZWRjYXBfZXZlbnRfbmFtZSA8LSBnc3ViKFwiX2FybV8xXCIsIFwiXCIsIGRhdGEuUFYkcmVkY2FwX2V2ZW50X25hbWUpXG5kYXRhLlBWJHJlZGNhcF9ldmVudF9uYW1lIDwtIGdzdWIoXCJ2aXNpdF9cIiwgXCJcIiwgZGF0YS5QViRyZWRjYXBfZXZlbnRfbmFtZSlcbmBgYCJ9 -->
@@ -1817,17 +1830,43 @@ data.PV$redcap_event_name &lt;- gsub(&quot;visit_&quot;, &quot;&quot;, data.PV$r
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
+</div>
+<div id="lav-visit-variable-til-brugbar-factor-som-er-den-korrekte-form-i-dette-tilfælde." class="section level1">
+<h1>Lav visit-variable til brugbar factor, som er den korrekte form i dette tilfælde.</h1>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGF0YS5QVlsgLGMoKSBdXG5gYGAifQ== -->
-<pre class="r"><code>data.PV[ ,c() ]</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGF0YS5QViR2aXNpdCA8LSBhcy5mYWN0b3IoZGF0YS5QViR2aXNpdClcbmBgYCJ9 -->
+<pre class="r"><code>data.PV$visit &lt;- as.factor(data.PV$visit)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="giv-factor-labels" class="section level1">
+<h1>Giv factor “labels”</h1>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGF0YS5QViR2aXNpdCA8LSBmYWN0b3IoZGF0YS5QViR2aXNpdCwgbGFiZWxzID0gYyhcIkJhc2VsaW5lXCIsIFwiMjQgaG91cnNcIiwgXCJEYXkgNVwiKSlcbmBgYCJ9 -->
+<pre class="r"><code>data.PV$visit &lt;- factor(data.PV$visit, labels = c(&quot;Baseline&quot;, &quot;24 hours&quot;, &quot;Day 5&quot;))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Vi fjerner variable, vi ikke skal bruge. Og vi gør det effektivt, så vi søger f.eks. efter noget specifikt for at slette disse.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBCYXNlIFJcbiMgRGV0IGVyIGZpbnQgbm9rIGxpZ2UgbnUsIEphY29iLCBtZW4gbmVkZW5zdMOlZW5kZSBrYW4gbm9nZXRcbmRhdGEuUFYgPSBzdWJzZXQoZGF0YS5QViwgc2VsZWN0ID0gLWMoZ3JlcChcInJlcGVhdFwiKSlcbmRmWywgLWdyZXAoXCJBXCIsIGNvbG5hbWVzKGRmKSldXG4jIFRpZHl2ZXJzZS9kcGx5clxuZGF0YS5QViA8LSBkYXRhLlBWICU+JSBzZWxlY3QoLWNvbnRhaW5zKFwicmVwZWF0XCIpKVxuYGBgIn0= -->
+<pre class="r"><code># Base R
+# Det er fint nok lige nu, Jacob, men nedenstående kan noget
+data.PV = subset(data.PV, select = -c(grep(&quot;repeat&quot;))
+df[, -grep(&quot;A&quot;, colnames(df))]
+# Tidyverse/dplyr
+data.PV &lt;- data.PV %&gt;% select(-contains(&quot;repeat&quot;))</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 </div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkbDhSBpZ2VuIg0Kb3V0cHV0OiBodG1sX25vdGVib29rDQotLS0NCg0KSW5kbMOmcyBkYXRhc8OmdCBvZyBzw6Vybg0KYGBge3J9DQpkYXRhLlBWIDwtIHJlYWQuY3N2KCJWYWdhbFRvbmVJbkluZmxhbW1hdC1QYXRpZW50VmlzaXRhdGlvbnNfREFUQV8yMDIwLVIuY3N2IikNCmBgYA0KDQojIEbDpSBzdHlyIHDDpSB2aXNpdHMNCk1hbiBrYW4gZW50ZW4gYnJ1Z2Ugc3RyaW5nciAodGlkeXZlcnNlKSBlbGxlciBCYXNlIFINCg0KDQpgYGB7cn0NCiMgQmFzZSBSIHVzaW5nIGdzdWINCmRhdGEuUFYkcmVkY2FwX2V2ZW50X25hbWUgPC0gZ3N1YigiX2FybV8xIiwgIiIsIGRhdGEuUFYkcmVkY2FwX2V2ZW50X25hbWUpDQpkYXRhLlBWJHJlZGNhcF9ldmVudF9uYW1lIDwtIGdzdWIoInZpc2l0XyIsICIiLCBkYXRhLlBWJHJlZGNhcF9ldmVudF9uYW1lKQ0KYGBgDQoNCmBgYHtyfQ0KZGF0YS5QVlsgLGMoKSBdDQpgYGANCg0K</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkbDhSBpZ2VuIg0Kb3V0cHV0OiBodG1sX25vdGVib29rDQotLS0NCg0KSW5kbMOmcyBkYXRhc8OmdCBvZyBzw6Vybg0KYGBge3IgaW5jbHVkZT1GQUxTRX0NCmRhdGEuUFYgPC0gcmVhZC5jc3YoIlZhZ2FsVG9uZUluSW5mbGFtbWF0LVBhdGllbnRWaXNpdGF0aW9uc19EQVRBXzIwMjAtUi5jc3YiKQ0KYGBgDQoNCiMgRsOlIHN0eXIgcMOlIHZpc2l0cyAodmFyaWFiZWwgPSByZWRjYXBfZXZlbnRfbmFtZSkNCkbDuHJzdCBvZyBmcmVtbWVzdCBzZXIgdmksIGF0IHJlZGNhcCBuYXZuZ2l2ZXIgdGluZ2VuZSBww6UgcmVkY2FwcyBtw6VkZS4gRGV0IGVyIGpvIHNpa2tlcnQgZmludCBub2ssIG1lbiBkZXQga2FuIHZpIGlra2UgYnJ1Z2UgdGlsIGRldCBzdG9yZSBoZXIgaSBSLiBWaSBza2FsIHJlbW9kZWxsZXJlIGxpZHQuIA0KDQpWaSBmb3Jzw7hnZXIgZsO4cnN0IGF0IGZqZXJuZSANCk1hbiBrYW4gZW50ZW4gYnJ1Z2Ugc3RyaW5nciAodGlkeXZlcnNlKSBlbGxlciBCYXNlIFINCg0KSGVyIG9tZMO4YmVyIHZpIHNlbHZlIGNlbGxlciBtZWQgaW5kaG9sZCwgc8Ola2FsZHRlIHN0cmluZy12w6ZyZGllci4gRGVyIGthbiBpa2tlIGxhdmVzIHN0YXRpc3RpayBww6Ugc3RyZW5nZS4gVmkgb21kw7hiZXIgZGVtIGRlcmZvciBmb3IgdGlsIHNpZHN0IGF0IGxhdmUgZGVtIHRpbCBlbiBhbmRlbiB0eXBlIHbDpnJkaSAoZmFjdG9yKQ0KDQojIE9tZMO4YiB2YXJpYWJsZSAocmVkY2FwX2V2ZW50X25hbWUgLT4gdmlzaXQpDQpgYGB7cn0NCiMgQmFzZSBSDQpuYW1lcyhkYXRhLlBWKVtuYW1lcyhkYXRhLlBWKT09InJlZGNhcF9ldmVudF9uYW1lIl0gPC0gInZpc2l0MSINCiMgVGlkeXZlcnNlLCBkcGx5cg0KZGF0YS5QViA8LSBkYXRhLlBWICU+JSByZW5hbWUodmlzaXQgPSByZWRjYXBfZXZlbnRfbmFtZSkNCmBgYA0KDQojIEZpa3MgY2VsbGV2w6ZyZGllciBzb20gc3RyZW5nZS4gU8O4ZyBvZyBlcnN0YXQNCmBgYHtyfQ0KIyBCYXNlIFIgdXNpbmcgZ3N1Yg0KZGF0YS5QViRyZWRjYXBfZXZlbnRfbmFtZSA8LSBnc3ViKCJfYXJtXzEiLCAiIiwgZGF0YS5QViRyZWRjYXBfZXZlbnRfbmFtZSkNCmRhdGEuUFYkcmVkY2FwX2V2ZW50X25hbWUgPC0gZ3N1YigidmlzaXRfIiwgIiIsIGRhdGEuUFYkcmVkY2FwX2V2ZW50X25hbWUpDQpgYGANCg0KIyBMYXYgdmlzaXQtdmFyaWFibGUgdGlsIGJydWdiYXIgZmFjdG9yLCBzb20gZXIgZGVuIGtvcnJla3RlIGZvcm0gaSBkZXR0ZSB0aWxmw6ZsZGUuDQpgYGB7cn0NCmRhdGEuUFYkdmlzaXQgPC0gYXMuZmFjdG9yKGRhdGEuUFYkdmlzaXQpDQpgYGANCiMgR2l2IGZhY3RvciAibGFiZWxzIg0KYGBge3J9DQpkYXRhLlBWJHZpc2l0IDwtIGZhY3RvcihkYXRhLlBWJHZpc2l0LCBsYWJlbHMgPSBjKCJCYXNlbGluZSIsICIyNCBob3VycyIsICJEYXkgNSIpKQ0KYGBgDQoNClZpIGZqZXJuZXIgdmFyaWFibGUsIHZpIGlra2Ugc2thbCBicnVnZS4gT2cgdmkgZ8O4ciBkZXQgZWZmZWt0aXZ0LCBzw6Ugdmkgc8O4Z2VyIGYuZWtzLiBlZnRlciBub2dldCBzcGVjaWZpa3QgZm9yIGF0IHNsZXR0ZSBkaXNzZS4NCmBgYHtyfQ0KIyBCYXNlIFINCiMgRGV0IGVyIGZpbnQgbm9rIGxpZ2UgbnUsIEphY29iLCBtZW4gbmVkZW5zdMOlZW5kZSBrYW4gbm9nZXQNCmRhdGEuUFYgPSBzdWJzZXQoZGF0YS5QViwgc2VsZWN0ID0gLWMoZ3JlcCgicmVwZWF0IikpDQpkZlssIC1ncmVwKCJBIiwgY29sbmFtZXMoZGYpKV0NCiMgVGlkeXZlcnNlL2RwbHlyDQpkYXRhLlBWIDwtIGRhdGEuUFYgJT4lIHNlbGVjdCgtY29udGFpbnMoInJlcGVhdCIpKQ0KYGBgDQoNCg0KDQoNCg0K</div>
 
 
 

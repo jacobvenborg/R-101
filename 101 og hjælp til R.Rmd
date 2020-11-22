@@ -62,6 +62,12 @@ print(ip, row.names=FALSE)
 View(ip)
 ```
 
+```{r}
+lapply(pakker, require, character.only = TRUE)
+
+```
+
+
 # "Subsetting vectors" = kig på bestemte værdier i en vektor?
 ```{r}
 x[1:10] ## viser værdierne nr. 1-10 i den angivne vektor(x)
@@ -123,7 +129,7 @@ pivot_wider(names_from = data$Species, values_from = data$Petal.Length)
 
 ## og = &, eller = |, 
 
-Find og erstat med Strinr (tidyverse)
+# Søg og erstat med Stringr (tidyverse)
 ```{r}
 # Stringr using str_replace
 data.PV$redcap_event_name <- str_replace(data.PV$redcap_event_name, "visit_", "")
@@ -132,7 +138,15 @@ data.PV$redcap_event_name <- str_replace(data.PV$redcap_event_name, "_arm_1", ""
 
 # Slet variable og sårn (drop i STATA)
 ```{r}
-data.PV = subset(data.PV, select = -c(redcap_repeat_instrument, redcap_repeat_instance))
+data.PV = subset(data.PV, select = -c(grep"redcap_rep" , redcap_repeat_instance))
+```
+
+## Slet variable ud fra mønster
+```{r}
+# Tidyverse
+data.PV <- data.PV %>% select(-contains("repeat"))
+
+# Base R
 
 ```
 
