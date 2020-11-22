@@ -12,6 +12,8 @@ data.PV$visit <- str_replace(data.PV$visit, "visit_", "")
 data.PV$visit <- str_replace(data.PV$visit, "_arm_1", "")
 data.PV$visit <- as.factor(data.PV$visit)
 data.PV$visit <- factor(data.PV$visit, labels = c("Baseline", "24 hours", "Day 5"))
+data.PV$visit <- as.factor(data.PV$visit)
+data.PV$visit <- factor(data.PV$visit, labels = c("Baseline", "24 hours", "Day 5"))
 # data.PV <- data.PV[, -grep("repeat", colnames(data.PV))]
 # data.PV <- data.PV[, -grep("comment", colnames(data.PV))]
 data.PV <- data.PV %>% 
