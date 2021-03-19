@@ -1,4 +1,4 @@
-**Data**
+**Data** (som forhhåbentligt er reproducérbart!)
 ```R
 df.smoking<- data.frame(
   subject_id = as.integer(c(1, 2, 3, 4, 5, 6)),
