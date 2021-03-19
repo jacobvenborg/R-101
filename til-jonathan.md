@@ -1,6 +1,6 @@
 **Data** (som forhhåbentligt er reproducérbart!)
 ```R
-df.smoking<- data.frame(
+df.smoking <- data.frame(
   subject_id = as.integer(c(1, 2, 3, 4, 5, 6)),
   smoking_status = as.factor(c("current", "previous", "never", "previous", "current", "current")),
   smoking_type = as.factor(c("cigarettes", "cigarettes", NA, "pipe", "cheroots", "cigars")),
