@@ -1,0 +1,57 @@
+/*
+
+*/
+
+body { /* Normal  */
+      font-size: 1em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "calibri light";
+  color: #2F5496;
+}
+
+h3, h6 {
+  color: #6f7074;
+}
+
+h1.title {
+  font-size: 2em;
+  color: #000000;
+}
+
+h1 { /* Header 1 */
+  font-size: 1.75em;
+}
+
+h2 { /* Header 2 */
+  font-size: 1.5em;
+}
+
+h3 { /* Header 3 */
+  font-size: 1.25em;
+}
+
+h4 { /* Header 4 */
+  font-size: 1em;
+  font-style: italic;
+}
+
+h5 { /* Header 5 */
+  font-size: 1em;
+}
+
+h6 { /* Header 6 */
+  font-size: 1em;
+}
+
+code.r{ /* Code block */
+    font-size: 1em;
+}
+pre { /* Code block - determines code spacing between lines */
+    font-size: 1em;
+}
+
+td {  /* Table  */
+  font-size: 0.75em;
+}

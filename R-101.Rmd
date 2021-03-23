@@ -1,35 +1,47 @@
 ---
 title: "Lidt gode råd til R"
-output: html_notebook
+output:
+  html_notebook:
+    toc: yes
+    toc_float: yes
+    css: C:/R/word.css
 ---
 
+    pdf_document:
+    toc: yes
+    word_document:
+    toc: yes
+
 # Installation og opsætning
-1)
+
 R er ikke et program, men et sprog. Så når du installerer R, så installerer et kodesprog, som tillader dig at skrive kommandoer i en terminal. Det kaldes også 'Base R', og kommer med en noget sløj GUI. Men det er f henter det her:
 
-https://cran.r-project.org/
+<https://cran.r-project.org/>
 
 ## RStudio (et 'program'/GUI)
+
 Heldigvis findes RStudio, som så er et program/GUI, således du lidt nemmere kan bruge det stærke R-sprog. Det skal du også installere! Det gør du her:
 
-https://rstudio.com/
+<https://rstudio.com/>
 
 # Basics
-## Encoding (æ, ø¸, å)
-Dansk er et specielt sprog, husk det. Derfor skal du garanteret ændre såkaldt "encoding". R er vist ANSI som udgangspunkt, men vi bruger UTF-8 for at kunne læse æ, ø¸ og å ordentligt.
-*> code > savings > encoding*
 
-## R Notebook brug
-For at indsætte "chunk"
-`Ctrl+Alt+I`
+## Encoding (æ, ø, å)
 
-## Se aktuel notesbos i HTML-udgave/render
-`Ctrl+Shift+K`
+Dansk er et specielt sprog, husk det. Derfor skal du garanteret ændre såkaldt "encoding". R er vist ANSI som udgangspunkt, men vi bruger UTF-8 (og nogle gange ISO-8859-1) for at kunne læse æ, ø¸ og å ordentligt. *tools \> global options \> code \> savings \> encoding*
+
+# R Notebook (R markdown)
+
+| Funktion                 | Hotkey         |
+|--------------------------|----------------|
+| Indsæt chunk             | `Ctrl+Alt+I`   |
+| Se notesbog (strik/knit) | `Ctrl+Shift+K` |
 
 # Filer, mapper og lokationer
 
 ## Skift placering af arbejdsmappe/working directory
-Foregår med kommandoen `setwd`. På windows bruger man `\` til at angive nyt mappe-niveau, men i R bruges der `/` eller `\\`. 
+
+Foregår med kommandoen `setwd`. På windows bruger man `\` til at angive nyt mappe-niveau, men i R bruges der `/` eller `\\`.
 
 ```{r}
 setwd("C:\\Users\\Jacob Venborg\\Google Drev\\Forskningsår\\")
@@ -37,13 +49,15 @@ setwd("C:/Users/Jacob Venborg/Google Drev/Forskningsår/Vagal Tone in Inflammato
 ```
 
 ## Få vist aktuel sti fra klipboard
+
 ```{r}
 readClipboard()
 ```
 
-
 # Pakke-håndtering (packages)
+
 ## Egne pakker
+
 ```{r}
 install.packages(c(
   "tidyverse",
@@ -54,6 +68,7 @@ install.packages(c(
 ```
 
 ## Se installerede pakker
+
 ```{r}
 ip <- as.data.frame(installed.packages()[,c(1,3:4)])
 rownames(ip) <- NULL
@@ -67,8 +82,8 @@ lapply(pakker, require, character.only = TRUE)
 
 ```
 
-
 # "Subsetting vectors" = kig på bestemte værdier i en vektor?
+
 ```{r}
 x[1:10] ## viser værdierne nr. 1-10 i den angivne vektor(x)
 x[is.na(x)] ## viser alle N/A-værdier i den angivne vektor(x). Man kan bruge "!" for at gøre det modsatte
@@ -76,60 +91,76 @@ x > 0 ## viser værdier større end 0 i vektor(x)
 
 ```
 
-## Få vist den 3., 5., 7., mv. værrdi af en vektor
+## Få vist den 3., 5., 7., mv. værdi af en vektor
+
 ```{r}
 x[c(3,5,7)] ## c = contrast. Vi får vist vektor(x), men angiver at vi kun vil se nr. 3, 5, 7 i vektor(x)
 x[c(-3,-5,-7)] ## c = contrast. Vi får vist vektor(x), men angiver at vi vil se vektor(x) UNDTAGEN nr. 3, 5, 7 i vektor(x)
 ```
 
-# DATAFRAMES ####
+# DATAFRAMES
+
 data.frame("vektor med f.eks. navne", "matrix, du vil indsætte navne i")
 
-colnames("datasæt") <- "navne på rækketitler" ## Indsæt navne på kolonner
-
+colnames("datasæt") \<- "navne på rækketitler" \#\# Indsæt navne på kolonner
 
 ## slet variable
+
 rm()
 
 ## Eksport af plot, du kigger på - her som svg
-dev.copy(svg, file = "C:\\Users\\Jacob Venborg\\Google Drev\\Forskningsår\\Vagal Tone in Inflammatory Diseases\\STATA\\R-grafer\\Rapport\\Figur 1 - CVT + HR + CRP + MHAQ.svg", width = 10, height = 7)
-dev.off()
+
+dev.copy(svg, file = "C:\\Users\\Jacob Venborg\\Google Drev\\Forskningsår\\Vagal Tone in Inflammatory Diseases\\STATA\\R-grafer\\Rapport\\Figur 1 - CVT + HR + CRP + MHAQ.svg", width = 10, height = 7) dev.off()
 
 ## Reshaping
+
+```{r}
 reshape(outcomes.Pirateplot,
         direction = "wide",
         v.names = outcomes.Pirateplot[],
         timevar = outcomes.Pirateplot$visit,
         idvar = outcomes.Pirateplot$subjectID)
+```
 
 ## Korrelations test
+
+```{r}
 cor.test(outcomes.Pirateplot$crp_edited, outcomes.Pirateplot$mhaq, method = "pearson")
+```
 
 ## Scatterplots
+
+```{r}
 library(ggplot2)
 ggplot(outcomes.Pirateplot, aes(x = crp_edited, y = morning_stiffness, group = subjectID, color = subjectID)) +
   geom_point() +
   theme_bw() 
+```
 
 ?grep()
 
 ## Hvad er en factor?!
+
 En variable, som består af 'levels'/niveauer af typen kategoriske data. Dette står f.eks. i kontrast til kontinuerte data, som er tal på en given arbitrær skala.
 
 ## Atttach
-Hvis jeg skal bruge det samme datasæt HELE tiden, og bliver træt af at skrive "data$...". Så kan man attache. Detach for at deaktivere funktionen.
+
+Hvis jeg skal bruge det samme datasæt HELE tiden, og bliver træt af at skrive "data\$...". Så kan man attache. Detach for at deaktivere funktionen.
 
 ## Re-shape/transponering
-pivot_longer()
-pivot_wider(names_from = data$Species, values_from = data$Petal.Length)
 
-## TIDYVERSE ##
+pivot_longer() pivot_wider(names_from = data$Species, values_from = data$Petal.Length)
+
+## TIDYVERSE
+
 # Pipes
-# %>% CTRL + SHIFT + M
 
-## og = &, eller = |, 
+# %\>% CTRL + SHIFT + M
+
+## og = &, eller = \|,
 
 # Søg og erstat med Stringr (tidyverse)
+
 ```{r}
 # Stringr using str_replace
 data.PV$redcap_event_name <- str_replace(data.PV$redcap_event_name, "visit_", "")
@@ -137,11 +168,13 @@ data.PV$redcap_event_name <- str_replace(data.PV$redcap_event_name, "_arm_1", ""
 ```
 
 # Slet variable og sårn (drop i STATA)
+
 ```{r}
 data.PV = subset(data.PV, select = -c(grep"redcap_rep" , redcap_repeat_instance))
 ```
 
 ## Slet variable ud fra mønster
+
 ```{r}
 # Tidyverse
 data.PV <- data.PV %>% select(-contains("repeat"))
@@ -150,3 +183,28 @@ data.PV <- data.PV %>% select(-contains("repeat"))
 
 ```
 
+## Få 'titlerne' på alle variable
+
+Hvis du f.eks. har en given dataframe (df), hvor du ønsker samtlige titler på variable (= navne på kolonner), kan man bruge formlen `colnames(df)`
+
+```{r}
+colnames(df)
+
+```
+
+# Slet mellemrum (white trailing spaces)
+[StackOverflow](https://stackoverflow.com/questions/2261079/how-can-i-trim-leading-and-trailing-white-space)
+Base R
+read.csv("x", strip.white = TRUE)
+
+trimws()
+
+gsub("^\\s+|\\s+$", "", x) 
+
+tidyverse::stringr(str_trim())
+
+# Regex i R - husk at tjekke regex101.com
+Det fungerer næsten som normalt, men når du skal escape special værdier, kræver det \\ i stedet for \. Grupper refereres til med $.
+
+# Snippets - gentagende formler/kode gjort hurtigt
+I RStudio kan man lave sine egne snippets. Virkelig nice, der eksisterer også allerede præfabrikerede snippets til hyppig brugt kode.

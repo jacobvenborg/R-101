@@ -23,8 +23,6 @@ data.PV <- data.PV %>%
 # ---
 
 # Lad os lege med tidyverse
-
-
 data.PV %>%
   select(contains("mhaq")) %>% 
   transmute(mhaq = rowMeans(.))
@@ -51,8 +49,6 @@ data.PV %>%
 
 
 data.PV$newdate_visitation <- strptime(as.character(data.PV$date_visitation), "%d/%m/%Y")  
-
-
 
 
 # Dato
