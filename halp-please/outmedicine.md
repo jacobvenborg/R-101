@@ -1,6 +1,7 @@
-# Problem
+# Data
 
-Jeg har lavet en dataframe `df.outmedicine` indeholdende data angående patienters medicin til respektive visits i et projekt. Dataframen er lavet ud fra en variabel `outmedicine` (fra et andet datasæt), hvor et udsnit af dennes indhold er vist her:
+# Problem
+Jeg har lavet en dataframe `df.outmedicine` indeholdende data angående patienters medicin til respektive visits i et projekt. Dataframen er lavet ud fra en variabel `outmedicine` fra et andet datasæt, som jeg har fået tilsendt. :
 
 # Udsnit af variablen "outmedicine"
 ```R
@@ -87,3 +88,4 @@ dput(df.outmedicine2, file = "dput/df.outmedicine.txt")
 df.outmedicine <- dget(df.outmedicine2, file = "dput/df.outmedicine.txt")
 ```
 Her er et link til data:
+
