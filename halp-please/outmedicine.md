@@ -1,7 +1,7 @@
 # Data
 
 # Problem
-Jeg har lavet en dataframe `df.outmedicine` indeholdende data angående patienters medicin til respektive visits i et projekt. Dataframen er lavet ud fra en variabel `outmedicine` fra et andet datasæt, som jeg har fået tilsendt. :
+Jeg har lavet en dataframe `df.outmedicine`, som skal indeholde data angående patienters medicin til respektive visits i et projekt. Dataframen er lavet ud fra en variabel `outmedicine` fra et andet datasæt, som jeg har fået tilsendt.
 
 # Udsnit af variablen "outmedicine"
 ```R
@@ -19,8 +19,8 @@ Jeg har lavet en dataframe `df.outmedicine` indeholdende data angående patiente
 # Subject 72
 ['-',['DMARD_MTX_SC',None,'20','BIOFREQ_WEEKLY','20140818','',(),None,(),None,None,None,'danbioordination.2014-08-18.6050791266'],['DMARD_FOLIMET',None,'15','BIOFREQ_WEEKLY','20140818','',(),None,(),None,None,None,'danbioordination.2014-08-18.6541013988'],['BIOLOGIC_PROJECT_MEDICINE','BIOPROJ','670','BIOFREQ_EVERY_4_WEEKS','20141020','',('WITHDRAWN_ADVERSE_EVENTS',),2,('RESEARCH_PROJECT',),1,1,0,'danbioordination.2014-10-27.1546554110'],'-','-','-','-']
 ```
-Som det forhåbentlig fremgår, har jeg altså en variabel af variabel (høhø) længde, så det er jo bare super.Fandt heldigvis frem til `splitstackshape::cSplit()` som faktisk kan splitte sådanne ubrugelige variable, så det er helt kanon. Her er lidt kode, som ender med et udsnit af den kreerede dataframe:
-# Lav df.outmedicine
+Som det forhåbentlig fremgår, har jeg altså en variabel af variabel (høhø) længde, så det er jo bare super. Fandt heldigvis frem til `splitstackshape::cSplit()` som faktisk kan splitte sådanne ubrugelige variable, så det er helt kanon. Her er lidt kode, som ender med et udsnit af den kreerede dataframe:
+# Lav df.outmedicine og df.outsplit
 
 ```R
 # Load pakker og data
@@ -49,43 +49,37 @@ drop = FALSE)
 
 df.outmedicine$count <- as.integer(df.outmedicine$count)
 
-# Definér liste med vars til redigering
-vars.outmedicine <- df.outmedicine %>%
-select(starts_with("outmedicine_"))
+# Lav lidt kedeligt, manuelt arbejde
+df.outsplit <- as.data.frame(
+  lapply(
+    df.outsplit,
+    function(x) gsub("\\'", "", x)))
+df.outsplit <- as.data.frame(
+  lapply(
+    df.outsplit,
+    function(x) gsub("\\[", "", x)))
+df.outsplit <- as.data.frame(
+  lapply(
+    df.outsplit,
+    function(x) gsub("\\]", "", x)))
+df.outsplit <- as.data.frame(
+  lapply(
+    df.outsplit,
+    function(x) gsub("\\(", "", x)))
+df.outsplit <- as.data.frame(
+  lapply(
+    df.outsplit,
+    function(x) gsub("\\)", "", x)))
+df.outsplit <- as.data.frame(
+  lapply(
+    df.outsplit,
+    function(x) gsub("^\\-$", "", x)))
 
-# Lav lidt kedeligt, manuelt arbejde, før man vel kan give den gas
-# Fjern "'"
-df.outmedicine <- as.data.frame(
-lapply(
-df.outmedicine,
-function(x) gsub("\\'", "", x)))
-
-# Fjern "[" og "]"
-df.outmedicine <- as.data.frame(
-lapply(
-df.outmedicine,
-function(x) gsub("\\[", "", x)))
-df.outmedicine <- as.data.frame(
-lapply(
-df.outmedicine,
-function(x) gsub("\\]", "", x)))
-df.outmedicine <- as.data.frame(
-lapply(
-df.outmedicine,
-function(x) gsub("\\(", "", x)))
-df.outmedicine <- as.data.frame(
-lapply(
-df.outmedicine,
-function(x) gsub("\\)", "", x)))
-df.outmedicine <- as.data.frame(
-lapply(
-df.outmedicine,
-function(x) gsub("^\\-$", "", x)))
-
-# Udsnit af df
-df.outmedicine2 <- df.outmedicine[0:300, ]
-dput(df.outmedicine2, file = "dput/df.outmedicine.txt")
-df.outmedicine <- dget(df.outmedicine2, file = "dput/df.outmedicine.txt")
+# Gem outsplit til data, så andre kan hjælpe
+save(df.outsplit, file = "C://R/R-101/RData/outsplit.rdata")
 ```
 Her er et link til data:
+https://github.com/jvenborg/R-101/raw/main/RData/outmedicine.RData
 
+# Mål
+cSplit laver intet mindre en 72 variable, eftersom outmedicine-variablen i første omgang er lettere talentløst opbygget. De skal jo samles på én eller anden måde. Jeg tænker noget loop/apply på en eller anden måde. Det er her, jeg er gået gevaldigt i stå.
